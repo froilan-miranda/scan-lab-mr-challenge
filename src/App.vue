@@ -4,7 +4,23 @@ import { onMounted } from 'vue';
 import * as THREE from 'three';
 
 const webGl = ref();
-
+const controlState = ref({
+  cube: {
+    x: 0,
+    y: 0,
+    z: 0
+  },
+  spheere: {
+    x: 0,
+    y: 0,
+    z: 0
+  },
+  line: {
+    x: 0,
+    y: 0,
+    z: 0
+  }
+})
 onMounted(() => {
   // scene setup
   console.log("component has mounted")
@@ -79,9 +95,9 @@ onMounted(() => {
   cubeMaterial.opacity = 0.7;
   const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
-  cube.position.x = 0;
-  cube.position.y = 0;
-  cube.position.z = 0;
+  cube.position.x = controlState.value.cube.x;
+  cube.position.y = controlState.value.cube.y;
+  cube.position.z = controlState.value.cube.z;
   scene.add(cube);
 
   renderer.render(scene, camera)
@@ -95,6 +111,19 @@ onMounted(() => {
 
   <main>
     <canvas ref="webGl" class="webGl" />
+    <div class="user-controls">
+      <h1>Form Inputs</h1>
+      <h2>Cube (Center Vector3)</h2>
+      <label for="cube-x">
+        x: <input v-model.number="controlState.cube.x" />
+      </label>
+      <label for="cube-y">
+        y: <input v-model.number="controlState.cube.y"/>
+      </label>
+      <label>
+        z: <input v-model.number="controlState.cube.z" />
+      </label>
+    </div>
   </main>
 </template>
 
