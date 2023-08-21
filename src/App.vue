@@ -50,18 +50,6 @@ onMounted(() => {
   dirLight.shadow.bias = -0.0005;
   scene.add(dirLight);
 
-  // create a cube add to the scene
-  const cubeGeometry = new THREE.BoxGeometry();
-  const cubeMaterial = new THREE.MeshPhongMaterial({ color: 0x666666 });
-  cubeMaterial.transparent = true;
-  cubeMaterial.opacity = 0.7;
-  const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-
-  cube.position.x = 0;
-  cube.position.y = 0;
-  cube.position.z = 0;
-  scene.add(cube);
-
   // create a line and add to scene
   const lineMaterial = new THREE.LineBasicMaterial({
     color: 0x00ff00
@@ -83,6 +71,18 @@ onMounted(() => {
   sphere.position.y = 0;
   sphere.position.z = 0;
   scene.add(sphere);
+
+  // create a cube add to the scene
+  const cubeGeometry = new THREE.BoxGeometry();
+  const cubeMaterial = new THREE.MeshPhongMaterial({ color: 0x666666 });
+  cubeMaterial.transparent = true;
+  cubeMaterial.opacity = 0.7;
+  const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+
+  cube.position.x = 0;
+  cube.position.y = 0;
+  cube.position.z = 0;
+  scene.add(cube);
 
   renderer.render(scene, camera)
 
