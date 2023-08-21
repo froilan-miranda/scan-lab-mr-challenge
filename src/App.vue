@@ -100,8 +100,15 @@ onMounted(() => {
   cube.position.z = controlState.value.cube.z;
   scene.add(cube);
 
-  renderer.render(scene, camera)
-
+  function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera)
+    
+    cube.position.x = controlState.value.cube.x;
+    cube.position.y = controlState.value.cube.y;
+    cube.position.z = controlState.value.cube.z;
+  }
+  animate();
 });
 </script>
 
@@ -115,13 +122,13 @@ onMounted(() => {
       <h1>Form Inputs</h1>
       <h2>Cube (Center Vector3)</h2>
       <label for="cube-x">
-        x: <input v-model.number="controlState.cube.x" />
+        x: <input v-model.number="controlState.cube.x" type="number" />
       </label>
       <label for="cube-y">
-        y: <input v-model.number="controlState.cube.y"/>
+        y: <input v-model.number="controlState.cube.y" type="number" />
       </label>
       <label>
-        z: <input v-model.number="controlState.cube.z" />
+        z: <input v-model.number="controlState.cube.z" type="number" />
       </label>
     </div>
   </main>
