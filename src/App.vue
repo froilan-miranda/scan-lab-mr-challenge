@@ -27,6 +27,19 @@ onMounted(() => {
   renderer.setSize(window.innerWidth, window.innerHeight*0.66);
   renderer.setClearColor(0xffffff);
 
+  // create a cube and torus knot and add them to the scene
+  const cubeGeometry = new THREE.BoxGeometry();
+  const cubeMaterial = new THREE.MeshBasicMaterial({
+        color: 'green',
+        transparent: true,
+        opacity: 0.4
+    });
+  const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+
+  cube.position.x = -1;
+  cube.castShadow = true;
+  scene.add(cube);
+
   renderer.render(scene, camera)
 
 });
