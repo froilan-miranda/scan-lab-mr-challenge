@@ -18,6 +18,17 @@ onMounted(() => {
   camera.position.z = 8;
   camera.position.y = 2;
 
+  // setup the renderer and attach to canvas
+  const canvas = webGl.value;
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.VSMShadowMap;
+  renderer.setSize(window.innerWidth, window.innerHeight*0.66);
+  renderer.setClearColor(0xffffff);
+
+  renderer.render(scene, camera)
+
 });
 </script>
 
