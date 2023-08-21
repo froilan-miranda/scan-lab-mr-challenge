@@ -1,6 +1,9 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { ref } from 'vue'
+import * as THREE from 'three'
+
+const webGl = ref();
+
 </script>
 
 <template>
@@ -8,6 +11,7 @@ import TheWelcome from './components/TheWelcome.vue'
   </header>
 
   <main>
+    <canvas ref="webGl" class="webGl" />
   </main>
 </template>
 
