@@ -13,10 +13,14 @@ onMounted(() => {
   scene.fog = new THREE.Fog(0xffffff, 0.0025, 50);
 
   // setup camera and basic renderer
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / (window.innerHeight*0.66), 0.1, 1000);
-  camera.position.x = 0;
-  camera.position.z = 8;
-  camera.position.y = 1.5;
+  //const camera = new THREE.PerspectiveCamera(75, window.innerWidth / (window.innerHeight*0.66), 0.1, 1000);
+  const left = -3.2, right = 3.2,
+  top2 = 2.4, bottom = -2.4,
+  near = 0.01, far = 100;
+  
+  const camera = new THREE.OrthographicCamera(left, right, top2, bottom, near, far);
+  camera.position.set(1, 1, 2);
+  camera.lookAt(0, 0, 0);
 
   // setup the renderer and attach to canvas
   const canvas = webGl.value;
@@ -50,10 +54,9 @@ onMounted(() => {
   const cubeMaterial = new THREE.MeshPhongMaterial({ color: 0x000000 });
   const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
-  cube.position.x = 1;
+  cube.position.x = 0;
   cube.position.y = 0;
-  cube.position.z = 4;
-  //cube.castShadow = true;
+  cube.position.z = 0;
   scene.add(cube);
 
   // create a line and add to scene
@@ -61,16 +64,19 @@ onMounted(() => {
     color: 0x00ff00
   });
   const points = [];
-  points.push(new THREE.Vector3(0, 0, 0));
-  points.push(new THREE.Vector3(0, 1, 0));
+  points.push(new THREE.Vector3(-0.5, 0, 0));
+  points.push(new THREE.Vector3(-1, -1, 0));
   const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
   const line = new THREE.Line(lineGeometry, lineMaterial);
   scene.add(line);
 
   //create sphere and add to scene
-  const sphereGeometry = new THREE.SphereGeometry(0.5, 10, 10);
+  const sphereGeometry = new THREE.SphereGeometry(0.1, 10, 10);
   const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
   const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+  sphere.position.x = -0.5;
+  sphere.position.y = 0;
+  sphere.position.z = 0;
   scene.add(sphere);
 
   renderer.render(scene, camera)
