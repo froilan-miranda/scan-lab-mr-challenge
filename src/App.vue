@@ -16,10 +16,10 @@ onMounted(() => {
   //const camera = new THREE.PerspectiveCamera(75, window.innerWidth / (window.innerHeight*0.66), 0.1, 1000);
   const left = -3.2, right = 3.2,
   top2 = 2.4, bottom = -2.4,
-  near = 0.01, far = 100;
+  near = 0.001, far = 100;
   
   const camera = new THREE.OrthographicCamera(left, right, top2, bottom, near, far);
-  camera.position.set(1, 1, 2);
+  camera.position.set(-0.2, 0.2, 1);
   camera.lookAt(0, 0, 0);
 
   // setup the renderer and attach to canvas
@@ -30,9 +30,10 @@ onMounted(() => {
   renderer.shadowMap.type = THREE.VSMShadowMap;
   renderer.setSize(window.innerWidth, window.innerHeight*0.66);
   renderer.setClearColor(0xffffff);
+  renderer.sortObjects = false;
 
   // add lights
-  scene.add(new THREE.AmbientLight(0xffffff))
+  scene.add(new THREE.AmbientLight(0xffffff, 0.5))
   const dirLight = new THREE.DirectionalLight(0xffffff)
   dirLight.position.set(5, 12, 8)
   dirLight.castShadow = true
@@ -51,7 +52,9 @@ onMounted(() => {
 
   // create a cube add to the scene
   const cubeGeometry = new THREE.BoxGeometry();
-  const cubeMaterial = new THREE.MeshPhongMaterial({ color: 0x000000 });
+  const cubeMaterial = new THREE.MeshPhongMaterial({ color: 0x666666 });
+  cubeMaterial.transparent = true;
+  cubeMaterial.opacity = 0.7;
   const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
   cube.position.x = 0;
@@ -72,7 +75,9 @@ onMounted(() => {
 
   //create sphere and add to scene
   const sphereGeometry = new THREE.SphereGeometry(0.1, 10, 10);
-  const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+  const sphereMaterial = new THREE.MeshPhongMaterial({ color: 0x0000ff });
+  sphereMaterial.transparent = true;
+  sphereMaterial.opacity = 0.7;
   const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
   sphere.position.x = -0.5;
   sphere.position.y = 0;
