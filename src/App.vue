@@ -45,9 +45,9 @@ onMounted(() => {
   dirLight.shadow.bias = -0.0005;
   scene.add(dirLight);
 
-  // create a cube and torus knot and add them to the scene
+  // create a cube add to the scene
   const cubeGeometry = new THREE.BoxGeometry();
-  const cubeMaterial = new THREE.MeshPhongMaterial({ color: 0x0000FF });
+  const cubeMaterial = new THREE.MeshPhongMaterial({ color: 0x000000 });
   const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
   cube.position.x = 1;
@@ -55,6 +55,18 @@ onMounted(() => {
   cube.position.z = 4;
   //cube.castShadow = true;
   scene.add(cube);
+
+  // create a line and add to scene
+  const lineMaterial = new THREE.LineBasicMaterial({
+    color: 0x00ff00
+  });
+  const points = [];
+  points.push(new THREE.Vector3(0, 0, 0));
+  points.push(new THREE.Vector3(0, 1, 0));
+  const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
+  const line = new THREE.Line(lineGeometry, lineMaterial);
+  scene.add(line);
+
 
   renderer.render(scene, camera)
 
