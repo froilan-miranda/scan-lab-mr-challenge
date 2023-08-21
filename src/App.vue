@@ -67,6 +67,11 @@ onMounted(() => {
   const line = new THREE.Line(lineGeometry, lineMaterial);
   scene.add(line);
 
+  //create sphere and add to scene
+  const sphereGeometry = new THREE.SphereGeometry(0.5, 10, 10);
+  const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+  const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+  scene.add(sphere);
 
   renderer.render(scene, camera)
 
