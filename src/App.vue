@@ -18,13 +18,13 @@ const controlState = ref({
   },
   line: {
     start: {
-      x: -0.5,
-      y: 0.25,
+      x: -5,
+      y: 2.5,
       z: 0
     },   
     end: {
-      x: -1.25,
-      y: -0.4,
+      x: -12.5,
+      y: -4,
       z: 0
     }
   }
@@ -35,15 +35,22 @@ onMounted(() => {
   console.log("component has mounted")
   const scene = new THREE.Scene();
   scene.backgroundColor = 0xffffff;
-  scene.fog = new THREE.Fog(0xffffff, 0.0025, 50);
+
+  const cWidth = window.innerWidth;
+  const cHeight = window.innerHeight * 0.6;
+
+  const aspect = cWidth / cHeight;
+  const viewSize = 40;
 
   // setup camera and basic renderer
-  const left = -3.2, right = 3.2,
-  top2 = 2.4, bottom = -2.4,
-  near = 0.001, far = 100;
+  const left = -aspect * viewSize / 2, 
+    right = aspect * viewSize / 2,
+    top = viewSize / 2, 
+    bottom = -viewSize / 2,
+    near = -200, far = 200;
   
-  const camera = new THREE.OrthographicCamera(left, right, top2, bottom, near, far);
-  camera.position.set(-0.2, 0.2, 1);
+  const camera = new THREE.OrthographicCamera(left, right, top, bottom, near, far);
+  camera.position.set(-0.2, 0.2, 1)
   camera.lookAt(0, 0, 0);
 
   // setup the renderer and attach to canvas
@@ -52,7 +59,7 @@ onMounted(() => {
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.VSMShadowMap;
-  renderer.setSize(window.innerWidth, window.innerHeight*.7);
+  renderer.setSize(cWidth, cHeight);
   renderer.setClearColor(0xffffff);
   renderer.sortObjects = false;
 
@@ -96,6 +103,7 @@ onMounted(() => {
   sphereMaterial.transparent = true;
   sphereMaterial.opacity = 0.7;
   const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+  sphere.scale.set(10, 10, 10)
   sphere.visible = false;
   scene.add(sphere);
 
@@ -105,6 +113,8 @@ onMounted(() => {
   cubeMaterial.transparent = true;
   cubeMaterial.opacity = 0.7;
   const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+  cube.scale.set(10, 10, 10)
+  cube.geometry.computeBoundingBox();
 
   scene.add(cube);
 
@@ -133,14 +143,12 @@ onMounted(() => {
     const intersectPoint = new THREE.Vector3();
     
     if(ray.intersectBox(box, intersectPoint)){
-      console.log(intersectPoint);
       sphere.position.copy(intersectPoint);
       sphere.visible = true;
       output.value.x = intersectPoint.x;
       output.value.y = intersectPoint.y;
       output.value.z = intersectPoint.z;
     }else{
-      console.log("no intersection");
       sphere.visible = false;
       output.value.x = '';
       output.value.y = '';
