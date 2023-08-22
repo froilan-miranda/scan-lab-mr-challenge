@@ -16,11 +16,19 @@ const controlState = ref({
     z: 0
   },
   line: {
-    x: 0,
-    y: 0,
-    z: 0
+    start: {
+      x: -0.5,
+      y: 0.25,
+      z: 0
+    },   
+    end: {
+      x: -1.25,
+      y: -0.4,
+      z: 0
+    }
   }
 })
+
 onMounted(() => {
   // scene setup
   console.log("component has mounted")
@@ -119,16 +127,27 @@ onMounted(() => {
     <canvas ref="webGl" class="webGl" />
     <div class="user-controls">
       <h1>Form Inputs</h1>
-      <h2>Cube (Center Vector3)</h2>
-      <label for="cube-x">
-        x: <input v-model.number="controlState.cube.x" type="number" />
-      </label>
-      <label for="cube-y">
-        y: <input v-model.number="controlState.cube.y" type="number" />
-      </label>
-      <label>
-        z: <input v-model.number="controlState.cube.z" type="number" />
-      </label>
+      <div class="cube-controls">
+        <h2>Cube (Center Vector3)</h2>
+        <label for="cube-x">
+          x: <input v-model.number="controlState.cube.x" type="number" />
+        </label>
+        <label for="cube-y">
+          y: <input v-model.number="controlState.cube.y" type="number" />
+        </label>
+        <label>
+          z: <input v-model.number="controlState.cube.z" type="number" />
+        </label>
+      </div>
+      <div class="line-controls">
+        <h2>Line Segments</h2>
+        <h3>Start Vector3</h3>
+        <label for="line-start-x">
+          x: <input v-model.number="controlState.line.start.x" type="number" />
+          y: <input v-model.number="controlState.line.start.y" type="number" />
+          z: <input v-model.number="controlState.line.start.z" type="number" />
+        </label>
+      </div>
     </div>
   </main>
 </template>
