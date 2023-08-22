@@ -78,11 +78,16 @@ onMounted(() => {
     color: 0x00ff00
   });
   const points = [];
-  points.push(new THREE.Vector3(-0.5, 0.25, 0));
-  points.push(new THREE.Vector3(-1.25, -0.4, 0));
+  const start = new THREE.Vector3(controlState.value.line.start.x, controlState.value.line.start.y, controlState.value.line.start.z);
+  const end = new THREE.Vector3(controlState.value.line.end.x, controlState.value.line.end.y, controlState.value.line.end.z);
+  points.push(start);
+  points.push(end);
   const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
   const line = new THREE.Line(lineGeometry, lineMaterial);
   scene.add(line);
+
+  // create a ray for collision testing
+  const ray = new THREE.Ray();
 
   //create sphere and add to scene
   const sphereGeometry = new THREE.SphereGeometry(0.05, 10, 10);
@@ -102,10 +107,10 @@ onMounted(() => {
   cubeMaterial.opacity = 0.7;
   const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
-  cube.position.x = controlState.value.cube.x;
-  cube.position.y = controlState.value.cube.y;
-  cube.position.z = controlState.value.cube.z;
   scene.add(cube);
+
+  // create bounding box for cube
+  const box = new THREE.Box3().setFromObject(cube);
 
   function animate() {
     requestAnimationFrame(animate);
@@ -114,13 +119,25 @@ onMounted(() => {
     cube.position.x = controlState.value.cube.x;
     cube.position.y = controlState.value.cube.y;
     cube.position.z = controlState.value.cube.z;
-    
+    box.copy(cube.geometry.boundingBox).applyMatrix4(cube.matrixWorld);
+
     points.length = 0;
-    points.push(new THREE.Vector3(controlState.value.line.start.x, controlState.value.line.start.y, controlState.value.line.start.z));
-    points.push(new THREE.Vector3(controlState.value.line.end.x, controlState.value.line.end.y, controlState.value.line.end.z));
+    start.set(controlState.value.line.start.x, controlState.value.line.start.y, controlState.value.line.start.z);
+    end.set(controlState.value.line.end.x, controlState.value.line.end.y, controlState.value.line.end.z);
+    points.push(start);
+    points.push(end);
     lineGeometry.setFromPoints(points);
     line.geometry.verticesNeedUpdate = true;
+
+    ray.set(start, end.clone().sub(start).normalize());
+
+    const intersectPoint = new THREE.Vector3();
     
+    if(ray.intersectBox(box, intersectPoint)){
+      console.log(intersectPoint);
+    }else{
+      console.log("no intersection");
+    }
   }
   animate();
 });
