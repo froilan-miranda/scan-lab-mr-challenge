@@ -52,7 +52,7 @@ onMounted(() => {
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.VSMShadowMap;
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(window.innerWidth, window.innerHeight*.7);
   renderer.setClearColor(0xffffff);
   renderer.sortObjects = false;
 
@@ -147,7 +147,7 @@ onMounted(() => {
       output.value.z = '';
     }
   }
-  //animate();
+  animate();
 });
 </script>
 
@@ -156,46 +156,55 @@ onMounted(() => {
   </header>
 
   <main>
-    <canvas ref="webGl" class="webGl" />
-    <div class="user-controls">
-      <h1>Form Inputs</h1>
-      <div class="cube-controls">
-        <h2>Cube (Center Vector3)</h2>
-        <label for="cube-x">
-          x: <input v-model.number="controlState.cube.x" type="number" />
-        </label>
-        <label for="cube-y">
-          y: <input v-model.number="controlState.cube.y" type="number" />
-        </label>
-        <label>
-          z: <input v-model.number="controlState.cube.z" type="number" />
-        </label>
-      </div>
-      <div class="line-controls">
-        <h2>Line Segments</h2>
-        <h3>Start Vector3</h3>
-        <label for="line-start-x">
-          x: <input v-model.number="controlState.line.start.x" type="number" />
-        </label>
-        <label for="line-start-y">
-          y: <input v-model.number="controlState.line.start.y" type="number" />
-        </label>
-        <label for="line-start-z">
-          z: <input v-model.number="controlState.line.start.z" type="number" />
-        </label>
-        <h3>End Vector3</h3>
-        <label for="line-end-x">
-          x: <input v-model.number="controlState.line.end.x" type="number" />
-        </label>
-        <label for="line-end-y">
-          y: <input v-model.number="controlState.line.end.y" type="number" />
-        </label>
-        <label for="line-end-z">
-          z: <input v-model.number="controlState.line.end.z" type="number" />
-        </label>
+    <div class="viewport">
+      <canvas ref="webGl" class="webGl" />
+    </div>
+    <div class="input-output">
+      <div class="input-controls">
+        <h1>Form Inputs</h1>
+        <div class="cube-controls">
+          <h2>Cube (Center Vector3)</h2>
+          <label for="cube-x">
+            x: <input v-model.number="controlState.cube.x" type="number" />
+          </label>
+          <label for="cube-y">
+            y: <input v-model.number="controlState.cube.y" type="number" />
+          </label>
+          <label>
+            z: <input v-model.number="controlState.cube.z" type="number" />
+          </label>
+        </div>
+        <div class="line-controls">
+          <h2>Line Segments</h2>
+          <div class="line-start-controls">
+            <h3>Start Vector3</h3>
+            <label for="line-start-x">
+              x: <input v-model.number="controlState.line.start.x" type="number" />
+            </label>
+            <label for="line-start-y">
+              y: <input v-model.number="controlState.line.start.y" type="number" />
+            </label>
+            <label for="line-start-z">
+              z: <input v-model.number="controlState.line.start.z" type="number" />
+            </label>
+          </div>
+          <div class="line-end-controls">
+            <h3>End Vector3</h3>
+            <label for="line-end-x">
+              x: <input v-model.number="controlState.line.end.x" type="number" />
+            </label>
+            <label for="line-end-y">
+              y: <input v-model.number="controlState.line.end.y" type="number" />
+            </label>
+            <label for="line-end-z">
+              z: <input v-model.number="controlState.line.end.z" type="number" />
+            </label>
+          </div>
+        </div>
       </div>
       <div class="output-view">
-        <h2>Output</h2>
+        <h1>Output</h1>
+        <h2>Intersection Vector3</h2>
         <ul>
           <li>x: {{ output.x }}</li>
           <li>y: {{ output.y }}</li>
@@ -207,4 +216,29 @@ onMounted(() => {
 </template>
 
 <style scoped>
+label {
+  display: block;
+}
+li {
+  list-style: none;
+}
+.viewport {
+  border: 1px solid black;
+}
+.input-output {
+  display: flex;
+  padding: 1rem;
+}
+.input-controls {
+  flex-grow: 1;
+}
+.line-controls {
+  margin-top: 1rem;
+}
+.line-end-controls {
+  margin-top: 0.5rem;
+}
+.output-view {
+  flex-grow: 1;
+}
 </style>
