@@ -95,9 +95,7 @@ onMounted(() => {
   sphereMaterial.transparent = true;
   sphereMaterial.opacity = 0.7;
   const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-  sphere.position.x = -0.5;
-  sphere.position.y = 0.25;
-  sphere.position.z = 0;
+  sphere.visible = false;
   scene.add(sphere);
 
   // create a cube add to the scene
@@ -135,8 +133,11 @@ onMounted(() => {
     
     if(ray.intersectBox(box, intersectPoint)){
       console.log(intersectPoint);
+      sphere.position.copy(intersectPoint);
+      sphere.visible = true;
     }else{
       console.log("no intersection");
+      sphere.visible = false;
     }
   }
   animate();
