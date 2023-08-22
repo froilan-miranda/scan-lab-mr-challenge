@@ -29,7 +29,6 @@ onMounted(() => {
   scene.fog = new THREE.Fog(0xffffff, 0.0025, 50);
 
   // setup camera and basic renderer
-  //const camera = new THREE.PerspectiveCamera(75, window.innerWidth / (window.innerHeight*0.66), 0.1, 1000);
   const left = -3.2, right = 3.2,
   top2 = 2.4, bottom = -2.4,
   near = 0.001, far = 100;
@@ -44,7 +43,7 @@ onMounted(() => {
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.VSMShadowMap;
-  renderer.setSize(window.innerWidth, window.innerHeight*0.66);
+  renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setClearColor(0xffffff);
   renderer.sortObjects = false;
 
@@ -71,20 +70,20 @@ onMounted(() => {
     color: 0x00ff00
   });
   const points = [];
-  points.push(new THREE.Vector3(-0.5, 0, 0));
-  points.push(new THREE.Vector3(-1, -1, 0));
+  points.push(new THREE.Vector3(-0.5, 0.25, 0));
+  points.push(new THREE.Vector3(-1.25, -0.4, 0));
   const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
   const line = new THREE.Line(lineGeometry, lineMaterial);
   scene.add(line);
 
   //create sphere and add to scene
-  const sphereGeometry = new THREE.SphereGeometry(0.1, 10, 10);
+  const sphereGeometry = new THREE.SphereGeometry(0.05, 10, 10);
   const sphereMaterial = new THREE.MeshPhongMaterial({ color: 0x0000ff });
   sphereMaterial.transparent = true;
   sphereMaterial.opacity = 0.7;
   const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
   sphere.position.x = -0.5;
-  sphere.position.y = 0;
+  sphere.position.y = 0.25;
   sphere.position.z = 0;
   scene.add(sphere);
 
