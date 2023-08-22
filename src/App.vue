@@ -151,8 +151,22 @@ onMounted(() => {
         <h3>Start Vector3</h3>
         <label for="line-start-x">
           x: <input v-model.number="controlState.line.start.x" type="number" />
+        </label>
+        <label for="line-start-y">
           y: <input v-model.number="controlState.line.start.y" type="number" />
+        </label>
+        <label for="line-start-z">
           z: <input v-model.number="controlState.line.start.z" type="number" />
+        </label>
+        <h3>End Vector3</h3>
+        <label for="line-end-x">
+          x: <input v-model.number="controlState.line.end.x" type="number" />
+        </label>
+        <label for="line-end-y">
+          y: <input v-model.number="controlState.line.end.y" type="number" />
+        </label>
+        <label for="line-end-z">
+          z: <input v-model.number="controlState.line.end.z" type="number" />
         </label>
       </div>
     </div>
