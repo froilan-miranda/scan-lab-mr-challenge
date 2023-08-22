@@ -121,14 +121,18 @@ onMounted(() => {
   // create bounding box for cube
   const box = new THREE.Box3().setFromObject(cube);
 
+  function updateCubePosition(obj, pos) {
+    obj.position.x = pos.x;
+    obj.position.y = pos.y;
+    obj.position.z = pos.z;
+    box.copy(obj.geometry.boundingBox).applyMatrix4(obj.matrixWorld);
+  }
+
   function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera)
     
-    cube.position.x = controlState.value.cube.x;
-    cube.position.y = controlState.value.cube.y;
-    cube.position.z = controlState.value.cube.z;
-    box.copy(cube.geometry.boundingBox).applyMatrix4(cube.matrixWorld);
+    updateCubePosition(cube, controlState.value.cube);
 
     points.length = 0;
     start.set(controlState.value.line.start.x, controlState.value.line.start.y, controlState.value.line.start.z);
