@@ -4,6 +4,7 @@ import { onMounted } from 'vue';
 import * as THREE from 'three';
 
 const webGl = ref();
+const output = ref({})
 const controlState = ref({
   cube: {
     x: 0,
@@ -135,12 +136,18 @@ onMounted(() => {
       console.log(intersectPoint);
       sphere.position.copy(intersectPoint);
       sphere.visible = true;
+      output.value.x = intersectPoint.x;
+      output.value.y = intersectPoint.y;
+      output.value.z = intersectPoint.z;
     }else{
       console.log("no intersection");
       sphere.visible = false;
+      output.value.x = '';
+      output.value.y = '';
+      output.value.z = '';
     }
   }
-  animate();
+  //animate();
 });
 </script>
 
@@ -186,6 +193,14 @@ onMounted(() => {
         <label for="line-end-z">
           z: <input v-model.number="controlState.line.end.z" type="number" />
         </label>
+      </div>
+      <div class="output-view">
+        <h2>Output</h2>
+        <ul>
+          <li>x: {{ output.x }}</li>
+          <li>y: {{ output.y }}</li>
+          <li>z: {{ output.z }}</li>
+        </ul>
       </div>
     </div>
   </main>
