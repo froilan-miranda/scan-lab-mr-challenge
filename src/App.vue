@@ -114,6 +114,13 @@ onMounted(() => {
     cube.position.x = controlState.value.cube.x;
     cube.position.y = controlState.value.cube.y;
     cube.position.z = controlState.value.cube.z;
+    
+    points.length = 0;
+    points.push(new THREE.Vector3(controlState.value.line.start.x, controlState.value.line.start.y, controlState.value.line.start.z));
+    points.push(new THREE.Vector3(controlState.value.line.end.x, controlState.value.line.end.y, controlState.value.line.end.z));
+    lineGeometry.setFromPoints(points);
+    line.geometry.verticesNeedUpdate = true;
+    
   }
   animate();
 });
