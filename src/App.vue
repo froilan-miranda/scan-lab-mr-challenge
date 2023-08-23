@@ -125,7 +125,16 @@ onMounted(() => {
     obj.position.x = pos.x;
     obj.position.y = pos.y;
     obj.position.z = pos.z;
-    box.copy(obj.geometry.boundingBox).applyMatrix4(obj.matrixWorld);
+  }
+
+  function updateLinePosition(){
+    points.length = 0;
+    start.set(controlState.value.line.start.x, controlState.value.line.start.y, controlState.value.line.start.z);
+    end.set(controlState.value.line.end.x, controlState.value.line.end.y, controlState.value.line.end.z);
+    points.push(start);
+    points.push(end);
+    lineGeometry.setFromPoints(points);
+    line.geometry.verticesNeedUpdate = true;
   }
 
   function animate() {
@@ -134,13 +143,9 @@ onMounted(() => {
     
     updateCubePosition(cube, controlState.value.cube);
 
-    points.length = 0;
-    start.set(controlState.value.line.start.x, controlState.value.line.start.y, controlState.value.line.start.z);
-    end.set(controlState.value.line.end.x, controlState.value.line.end.y, controlState.value.line.end.z);
-    points.push(start);
-    points.push(end);
-    lineGeometry.setFromPoints(points);
-    line.geometry.verticesNeedUpdate = true;
+    box.copy(cube.geometry.boundingBox).applyMatrix4(cube.matrixWorld);
+
+    updateLinePosition();
 
     ray.set(start, end.clone().sub(start).normalize());
 
