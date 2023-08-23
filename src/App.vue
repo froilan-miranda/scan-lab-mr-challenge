@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { onMounted } from 'vue';
 import * as THREE from 'three';
+import InputData from './components/InputData.vue';
 import OutputData from './components/OutputData.vue';
 
 const webGl = ref();
@@ -184,48 +185,7 @@ onMounted(() => {
       <canvas ref="webGl" class="webGl" />
     </div>
     <div class="input-output">
-      <div class="input-controls">
-        <h1>Form Inputs</h1>
-        <div class="cube-controls">
-          <h2>Cube (Center Vector3)</h2>
-          <label for="cube-x">
-            x: <input v-model.number="controlState.cube.x" type="number" />
-          </label>
-          <label for="cube-y">
-            y: <input v-model.number="controlState.cube.y" type="number" />
-          </label>
-          <label>
-            z: <input v-model.number="controlState.cube.z" type="number" />
-          </label>
-        </div>
-        <div class="line-controls">
-          <h2>Line Segments</h2>
-          <div class="line-start-controls">
-            <h3>Start Vector3</h3>
-            <label for="line-start-x">
-              x: <input v-model.number="controlState.line.start.x" type="number" />
-            </label>
-            <label for="line-start-y">
-              y: <input v-model.number="controlState.line.start.y" type="number" />
-            </label>
-            <label for="line-start-z">
-              z: <input v-model.number="controlState.line.start.z" type="number" />
-            </label>
-          </div>
-          <div class="line-end-controls">
-            <h3>End Vector3</h3>
-            <label for="line-end-x">
-              x: <input v-model.number="controlState.line.end.x" type="number" />
-            </label>
-            <label for="line-end-y">
-              y: <input v-model.number="controlState.line.end.y" type="number" />
-            </label>
-            <label for="line-end-z">
-              z: <input v-model.number="controlState.line.end.z" type="number" />
-            </label>
-          </div>
-        </div>
-      </div>
+      <InputData v-model="controlState"/>
       <OutputData :output="output" />
     </div>
   </main>
