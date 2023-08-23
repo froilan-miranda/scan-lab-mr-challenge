@@ -137,32 +137,38 @@ onMounted(() => {
     line.geometry.verticesNeedUpdate = true;
   }
 
-  function animate() {
-    requestAnimationFrame(animate);
-    renderer.render(scene, camera)
-    
-    updateCubePosition(cube, controlState.value.cube);
-
-    box.copy(cube.geometry.boundingBox).applyMatrix4(cube.matrixWorld);
-
-    updateLinePosition();
-
+  function checkIntersection(){
     ray.set(start, end.clone().sub(start).normalize());
-
     const intersectPoint = new THREE.Vector3();
     
     if(ray.intersectBox(box, intersectPoint)){
       sphere.position.copy(intersectPoint);
       sphere.visible = true;
-      output.value.x = intersectPoint.x;
-      output.value.y = intersectPoint.y;
-      output.value.z = intersectPoint.z;
+      updateOutput(intersectPoint.x, intersectPoint.y, intersectPoint.z);
     }else{
       sphere.visible = false;
-      output.value.x = '';
-      output.value.y = '';
-      output.value.z = '';
+      updateOutput('','','');
     }
+  }
+
+  function updateOutput(x,y,z){
+    output.value.x = x;
+    output.value.y = y;
+    output.value.z = z;
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera)
+    
+    //update cube position and bounding box
+    updateCubePosition(cube, controlState.value.cube);
+    box.copy(cube.geometry.boundingBox).applyMatrix4(cube.matrixWorld);
+
+    //update line position and check intersection point
+    updateLinePosition();
+    checkIntersection();
+
   }
   animate();
 });
