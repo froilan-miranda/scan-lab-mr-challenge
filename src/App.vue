@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { onMounted } from 'vue';
 import * as THREE from 'three';
+import OutputData from './components/OutputData.vue';
 
 const webGl = ref();
 const output = ref({})
@@ -225,15 +226,7 @@ onMounted(() => {
           </div>
         </div>
       </div>
-      <div class="output-view">
-        <h1>Output</h1>
-        <h2>Intersection Vector3</h2>
-        <ul>
-          <li>x: {{ output.x }}</li>
-          <li>y: {{ output.y }}</li>
-          <li>z: {{ output.z }}</li>
-        </ul>
-      </div>
+      <OutputData :output="output" />
     </div>
   </main>
 </template>
